@@ -14,7 +14,11 @@ defmodule Openlibrary.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: [
+      :httpoison,
+      :logger,
+      :poison,
+    ],
      mod: {Openlibrary, []}]
   end
 
@@ -28,6 +32,10 @@ defmodule Openlibrary.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:httpoison, "~> 0.10"},
+      {:isbn, ">= 0.1.0"},
+      {:poison, "~> 3.0"},
+    ]
   end
 end
