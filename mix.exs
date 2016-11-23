@@ -27,6 +27,8 @@ defmodule Openlibrary.Mixfile do
       {:httpoison, "~> 0.10"},
       {:isbn, ">= 0.1.0"},
       {:poison, "~> 3.0"},
+
+      {:ex_doc, ">= 0.0.0", only: :dev},
     ]
   end
 
