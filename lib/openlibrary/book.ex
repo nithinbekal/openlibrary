@@ -1,36 +1,33 @@
 defmodule Openlibrary.Book do
-  @api_url "https://openlibrary.org"
-  @edition_type "/type/edition"
+  @moduledoc """
+  Provides functions to find books by ISBN.
+  """
+
+  @api_url "https://openlibrary.org/api"
 
   @doc """
-  Fetch book information for given ISBN 10 or ISBN 13 number.
+  Fetch book information for given ISBN 10 or ISBN 13 number. Returns a map if
+  result is found, `nil` if no result is found and `:invalid_isbn` if invalid.
+
+      > Openlibrary.Book.find_by_isbn("0812511816")
+      # %{ title: "The Eye of the World", authors: [%{}, %{}], ... }
+
+      > Openlibrary.Book.find_by_isbn("invalidisbn")
+      # :invalid_isbn
+
+      > Openlibrary.Book.find_by_isbn("isbn not present in db")
+      # nil
+
   """
   def find_by_isbn(isbn) do
-    cond do
-      ISBN.valid_isbn10?(isbn) ->
-        query_isbn("type=#{@edition_type}&isbn_10=#{isbn}")
-      ISBN.valid_isbn13?(isbn) ->
-        query_isbn("type=#{@edition_type}&isbn_13=#{isbn}")
-      true ->
-        {:error, :invalid_isbn}
+    if ISBN.valid?(isbn) do
+      bibkey = "ISBN:#{isbn}"
+      "#{@api_url}/books?bibkeys=#{bibkey}&jscmd=data&format=json"
+      |> fetch_json()
+      |> Map.get(bibkey)
+    else
+      :invalid_isbn
     end
-  end
-
-  defp query_isbn(q) do
-    query(q)
-    |> Enum.map(fn %{"key" => key} -> key end)
-    |> List.first
-    |> send_json_request
-  end
-
-  defp query(q) do
-    "#{@api_url}/query.json?#{q}"
-    |> fetch_json
-  end
-
-  defp send_json_request(path) do
-    "#{@api_url}#{path}.json"
-    |> fetch_json
   end
 
   defp fetch_json(url) do

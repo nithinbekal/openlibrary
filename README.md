@@ -26,6 +26,22 @@ end
 
 ```elixir
 Openlibrary.Book.find_by_isbn("1408845644")
-#=> Returns a map.
+%{"authors" => [%{"name" => "Robert Jordan",
+     "url" => "https://openlibrary.org/authors/OL2645644A/Robert_Jordan"}],
+  "by_statement" => "Robert Jordan",
+  "classifications" => %{"dewey_decimal_class" => ["823.914"],
+    "lc_classifications" => ["PS3560.O7617 E94 1990"]},
+  "cover" => %{...},
+  "ebooks" => [...],
+  "identifiers" => %{
+    "isbn_10" => ["0812511816", "081257995X", "0613176340", "0812500482"],
+    "isbn_13" => ["9780812511819", "9780812579956", "9780613176347", "9780812500486"],
+    "lccn" => ["89007939"], "oclc" => ["22671036"],
+    "openlibrary" => ["OL24934473M"]
+  },
+  "key" => "/books/OL24934473M",
+  "number_of_pages" => 814, "pagination" => "814 p. :",
+  "publish_date" => "1990", "publish_places" => [%{"name" => "New York"}],
+  "publishers" => [%{"name" => "T. Doherty Associates"}],
+  "subjects" => [%{"name" => "Fantasy .", "url" => "https://openlibrary.org/subjects/fantasy_."}]}
 ```
-
