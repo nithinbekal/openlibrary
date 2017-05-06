@@ -45,3 +45,10 @@ Openlibrary.Book.find_by_isbn("1408845644")
   "publishers" => [%{"name" => "T. Doherty Associates"}],
   "subjects" => [%{"name" => "Fantasy .", "url" => "https://openlibrary.org/subjects/fantasy_."}]}
 ```
+
+## Credits
+
+Reading through the source of the [openlibrary gem](https://github.com/jayfajardo/openlibrary)
+by [jayfajardo](https://github.com/jayfajardo) has been a massive help in
+creating this package.
+
