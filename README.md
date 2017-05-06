@@ -2,7 +2,7 @@
 
 Elixir client for [Open Library Rest API](https://openlibrary.org/dev/docs/restful_api).
 
-Work in progress. Currently only supports fetching book information for a given ISBN.
+Work in progress. Currently only supports fetching book information for a given ISBN, LCCN or OCLC.
 
 ## Installation
 
@@ -44,6 +44,9 @@ Openlibrary.Book.find_by_isbn("1408845644")
   "publish_date" => "1990", "publish_places" => [%{"name" => "New York"}],
   "publishers" => [%{"name" => "T. Doherty Associates"}],
   "subjects" => [%{"name" => "Fantasy .", "url" => "https://openlibrary.org/subjects/fantasy_."}]}
+ 
+ Openlibrary.Book.find_by_lccn("96072233")
+ Openlibrary.Book.find_by_oclc("36792831")
 ```
 
 ## Credits
