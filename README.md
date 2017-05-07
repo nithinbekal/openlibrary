@@ -10,7 +10,7 @@ Add `openlibrary` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:openlibrary, "~> 0.1.0"}]
+  [{:openlibrary, "~> 0.1.1"}]
 end
 ```
 
@@ -24,8 +24,11 @@ end
 
 ## Usage
 
+The most common case is to look up books by ISBN:
+
 ```elixir
 Openlibrary.Book.find_by_isbn("1408845644")
+
 %{"authors" => [%{"name" => "Robert Jordan",
      "url" => "https://openlibrary.org/authors/OL2645644A/Robert_Jordan"}],
   "by_statement" => "Robert Jordan",
@@ -44,9 +47,16 @@ Openlibrary.Book.find_by_isbn("1408845644")
   "publish_date" => "1990", "publish_places" => [%{"name" => "New York"}],
   "publishers" => [%{"name" => "T. Doherty Associates"}],
   "subjects" => [%{"name" => "Fantasy .", "url" => "https://openlibrary.org/subjects/fantasy_."}]}
- 
- Openlibrary.Book.find_by_lccn("96072233")
- Openlibrary.Book.find_by_oclc("36792831")
+```
+
+You can also look up books by other keys:
+
+```elixir
+# Using Library of Congress catalog number:
+Openlibrary.Book.find_by_lccn("96072233")
+
+# Using Worldcat Control Number:
+Openlibrary.Book.find_by_oclc("36792831")
 ```
 
 ## Credits

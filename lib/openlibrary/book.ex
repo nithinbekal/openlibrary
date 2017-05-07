@@ -27,24 +27,35 @@ defmodule Openlibrary.Book do
     end
   end
 
+  @doc """
+  Fetch book information using Library of Congress catalog number.
 
-# Fetch book information for given LCCN
+      > Openlibrary.Book.find_by_lccn("lccn")
+      # %{ title: "The Eye of the World", authors: [%{}, %{}], ... }
+
+  """
   def find_by_lccn(lccn) do 
     find_by_bibkey("LCCN:#{lccn}")
   end
-  
-# Fetch book information for given OCLC_number
+
+  @doc """
+  Fetch book information using Worldcat Control Number.
+
+      > Openlibrary.Book.find_by_oclc("oclc")
+      # %{ title: "The Eye of the World", authors: [%{}, %{}], ... }
+
+  """
   def find_by_oclc(oclc) do 
     find_by_bibkey("OCLC:#{oclc}")
   end
 
 # find_by_bibkey function returns a map after fetching book information for given bibkey.
 # bibkey is an identifier which can be either ISBN, LCCN, or OCLC
-  
+
   def find_by_bibkey(bibkey) do 
-      "#{@api_url}/books?bibkeys=#{bibkey}&jscmd=data&format=json"
-      |> fetch_json()
-      |> Map.get(bibkey)
+    "#{@api_url}/books?bibkeys=#{bibkey}&jscmd=data&format=json"
+    |> fetch_json()
+    |> Map.get(bibkey)
   end
     
   defp fetch_json(url) do
