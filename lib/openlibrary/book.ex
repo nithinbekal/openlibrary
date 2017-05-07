@@ -21,7 +21,7 @@ defmodule Openlibrary.Book do
   """
   def find_by_isbn(isbn) do
     if ISBN.valid?(isbn) do
-      find_by_bibkey("ISBN:#{isbn}")     
+      find_by_bibkey("ISBN:#{isbn}")
     else
       :invalid_isbn
     end
@@ -49,15 +49,14 @@ defmodule Openlibrary.Book do
     find_by_bibkey("OCLC:#{oclc}")
   end
 
-# find_by_bibkey function returns a map after fetching book information for given bibkey.
-# bibkey is an identifier which can be either ISBN, LCCN, or OCLC
-
-  def find_by_bibkey(bibkey) do 
+  # Returns a map after fetching book information for a given key, which can be
+  # ISBN, LCCN, or OCLC.
+  defp find_by_bibkey(bibkey) do 
     "#{@api_url}/books?bibkeys=#{bibkey}&jscmd=data&format=json"
     |> fetch_json()
     |> Map.get(bibkey)
   end
-    
+
   defp fetch_json(url) do
     url
     |> HTTPoison.get!
