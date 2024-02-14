@@ -122,7 +122,7 @@ defmodule Openlibrary.Book do
   """
   def find_by_oclcs(oclcs) do
     oclcs
-    |> Enum.map(fn lccn -> "OCLC:#{oclc}" end)
+    |> Enum.map(fn oclc -> "OCLC:#{oclc}" end)
     |> Enum.join(",")
     |> find_by_bibkeys()
   end
