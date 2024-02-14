@@ -24,7 +24,7 @@ defmodule Openlibrary.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 0.10"},
+      {:httpoison, "~> 2.2"},
       {:isbn, ">= 0.1.0"},
       {:poison, "~> 3.0"},
 
