@@ -107,22 +107,22 @@ defmodule Openlibrary.Book do
 
   ## Examples
 
-      > Openlibrary.Book.find_by_oclc(["lccn1", "lccn2"])
+      > Openlibrary.Book.find_by_oclcs(["oclc1", "oclc2"])
       # %{
-      #   "LCCN:lccn1" => %{ title: "The Eye of the World", authors: [%{}, %{}], ... },
-      #   "LCCN:lccn2" => %{ title: "1984", authors: [%{}, %{}], ... }
+      #   "OCLC:oclc1" => %{ title: "The Eye of the World", authors: [%{}, %{}], ... },
+      #   "OCLC:oclc2" => %{ title: "1984", authors: [%{}, %{}], ... }
       # }
 
-      > Openlibrary.Book.find_by_oclc(["invalidlccn", "lccn not present in db"])
+      > Openlibrary.Book.find_by_oclcs(["invalidoclc", "oclc not present in db"])
       # %{
-      #   "LCCN:invalidlccn" => nil,
-      #   "LCCN:lccn not present in db" => nil
+      #   "oclc:invalidoclc" => nil,
+      #   "oclc:oclc not present in db" => nil
       # }
 
   """
-  def find_by_oclc(oclcs) do
+  def find_by_oclcs(oclcs) do
     oclcs
-    |> Enum.map(fn lccn -> "LCCN:#{lccn}" end)
+    |> Enum.map(fn lccn -> "OCLC:#{oclc}" end)
     |> Enum.join(",")
     |> find_by_bibkeys()
   end
