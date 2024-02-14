@@ -103,25 +103,25 @@ defmodule Openlibrary.Book do
 
   @doc """
   Fetches book information for a list of OCLC (Worldcat Control Numbers).
-  Returns a map where the keys are the LCCNs and the values are the corresponding book information.
+  Returns a map where the keys are the OCLCs and the values are the corresponding book information.
 
   ## Examples
 
-      > Openlibrary.Book.find_by_lccns(["lccn1", "lccn2"])
+      > Openlibrary.Book.find_by_oclc(["lccn1", "lccn2"])
       # %{
       #   "LCCN:lccn1" => %{ title: "The Eye of the World", authors: [%{}, %{}], ... },
       #   "LCCN:lccn2" => %{ title: "1984", authors: [%{}, %{}], ... }
       # }
 
-      > Openlibrary.Book.find_by_lccns(["invalidlccn", "lccn not present in db"])
+      > Openlibrary.Book.find_by_oclc(["invalidlccn", "lccn not present in db"])
       # %{
       #   "LCCN:invalidlccn" => nil,
       #   "LCCN:lccn not present in db" => nil
       # }
 
   """
-  def find_by_lccns(lccns) do
-    lccns
+  def find_by_oclc(oclcs) do
+    oclcs
     |> Enum.map(fn lccn -> "LCCN:#{lccn}" end)
     |> Enum.join(",")
     |> find_by_bibkeys()
