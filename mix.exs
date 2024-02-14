@@ -14,12 +14,15 @@ defmodule Openlibrary.Mixfile do
   end
 
   def application do
-    [applications: [
+    [
+      applications: [
       :httpoison,
       :logger,
       :poison,
-    ],
-     mod: {Openlibrary, []}]
+      ],
+      extra_applications: [:isbn],
+      mod: {Openlibrary, []}
+    ]
   end
 
   defp deps do
