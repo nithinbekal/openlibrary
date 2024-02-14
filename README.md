@@ -10,7 +10,7 @@ Add `openlibrary` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
-  [{:openlibrary, "~> 0.1.1"}]
+  [{:openlibrary, "~> 0.2.2"}]
 end
 ```
 
