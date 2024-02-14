@@ -31,9 +31,6 @@ defmodule Openlibrary.Book do
   Fetches book information for a list of ISBNs. Returns a map where the keys are
   the ISBNs and the values are the corresponding book information.
 
-  The function constructs a single URL with all the ISBNs and makes a single request
-  to the OpenLibrary API.
-
   ## Examples
 
       > Openlibrary.Book.find_by_isbns(["0812511816", "0451524934"])
@@ -68,6 +65,32 @@ defmodule Openlibrary.Book do
   end
 
   @doc """
+  Fetches book information for a list of LCCNs (Library of Congress Control Numbers).
+  Returns a map where the keys are the LCCNs and the values are the corresponding book information.
+
+  ## Examples
+
+      > Openlibrary.Book.find_by_lccns(["lccn1", "lccn2"])
+      # %{
+      #   "LCCN:lccn1" => %{ title: "The Eye of the World", authors: [%{}, %{}], ... },
+      #   "LCCN:lccn2" => %{ title: "1984", authors: [%{}, %{}], ... }
+      # }
+
+      > Openlibrary.Book.find_by_lccns(["invalidlccn", "lccn not present in db"])
+      # %{
+      #   "LCCN:invalidlccn" => nil,
+      #   "LCCN:lccn not present in db" => nil
+      # }
+
+  """
+  def find_by_lccns(lccns) do
+    lccns
+    |> Enum.map(fn lccn -> "LCCN:#{lccn}" end)
+    |> Enum.join(",")
+    |> find_by_bibkeys()
+  end
+
+  @doc """
   Fetch book information using Worldcat Control Number.
 
       > Openlibrary.Book.find_by_oclc("oclc")
@@ -78,8 +101,33 @@ defmodule Openlibrary.Book do
     find_by_bibkey("OCLC:#{oclc}")
   end
 
+  @doc """
+  Fetches book information for a list of OCLC (Worldcat Control Numbers).
+  Returns a map where the keys are the LCCNs and the values are the corresponding book information.
+
+  ## Examples
+
+      > Openlibrary.Book.find_by_lccns(["lccn1", "lccn2"])
+      # %{
+      #   "LCCN:lccn1" => %{ title: "The Eye of the World", authors: [%{}, %{}], ... },
+      #   "LCCN:lccn2" => %{ title: "1984", authors: [%{}, %{}], ... }
+      # }
+
+      > Openlibrary.Book.find_by_lccns(["invalidlccn", "lccn not present in db"])
+      # %{
+      #   "LCCN:invalidlccn" => nil,
+      #   "LCCN:lccn not present in db" => nil
+      # }
+
+  """
+  def find_by_lccns(lccns) do
+    lccns
+    |> Enum.map(fn lccn -> "LCCN:#{lccn}" end)
+    |> Enum.join(",")
+    |> find_by_bibkeys()
+  end
+
   defp find_by_bibkey(bibkey) do
-    # bibkey can be ISBN, LCCN, or OCLC.
     "#{@api_url}/books?bibkeys=#{bibkey}&jscmd=data&format=json"
     |> fetch_json()
     |> Map.get(bibkey)
